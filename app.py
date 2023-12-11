@@ -1,16 +1,16 @@
+
 # app.py
 
 from flask import Flask, render_template, request
 from instagram_private_api import Client
 from uuid import uuid4
 import csv
-import subprocess
-
+import streamlit as st
 app = Flask(__name__)
 
 # Replace with your Instagram credentials
-INSTAGRAM_USERNAME = "trialinstacode"  # Your default Instagram username
-INSTAGRAM_PASSWORD = "hellotheretest"  # Your default Instagram password
+INSTAGRAM_USERNAME = "sightunseen96"  # Your default Instagram username
+INSTAGRAM_PASSWORD = "koushiki"  # Your default Instagram password
 
 # Initialize a default 'api' variable
 api = Client(INSTAGRAM_USERNAME, INSTAGRAM_PASSWORD)
@@ -131,25 +131,4 @@ def get_lists():
     return render_template('result.html', followers=follower_usernames, following=following_usernames, unfollowers=unfollowers_usernames)
 
 if __name__ == '__main__':
-    # Start the Flask app in a separate process
-    flask_process = subprocess.Popen(["python", "app.py"])
-
-    # Streamlit app
-    import streamlit as st
-
-    st.title("Instagram Unfollowers Checker")
-
-    # Form to enter Instagram credentials
-    username = st.text_input("Instagram Username", key="username")
-    password = st.text_input("Instagram Password", key="password", type="password")
-
-    if st.button("Check Unfollowers"):
-        # Call the Flask endpoint to perform the check
-        st.write("Checking unfollowers. Please wait...")
-        response = subprocess.check_output(["curl", "-X", "POST", "-d", f"username={username}&password={password}", "http://127.0.0.1:5000/get_lists"])
-
-        # Display the result
-        st.write(response.decode())
-
-    # Stop Flask app when Streamlit app is closed
-    flask_process.terminate()
+    app.run(debug=True)
