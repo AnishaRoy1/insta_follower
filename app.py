@@ -5,7 +5,6 @@ from flask import Flask, render_template, request
 from instagram_private_api import Client
 from uuid import uuid4
 import csv
-import streamlit as st
 app = Flask(__name__)
 
 # Replace with your Instagram credentials
@@ -131,4 +130,4 @@ def get_lists():
     return render_template('result.html', followers=follower_usernames, following=following_usernames, unfollowers=unfollowers_usernames)
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=False,host='0.0.0.0')
